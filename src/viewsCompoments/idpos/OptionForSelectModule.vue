@@ -42,6 +42,5 @@ export default {
 <style>
 .optionBorder{
       border-top:#ffffff 1px solid;
-      border-bottom:#ffffff 1px solid;
 }
 </style>

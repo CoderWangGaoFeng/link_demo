@@ -18,7 +18,7 @@
     <el-container>
       <!--左侧菜单栏-->
       <el-aside>
-        <zTreeMenu :zTreeData="ztreeData"></zTreeMenu>
+        <zTreeMenu v-bind:zTreeData="ztreeJson"></zTreeMenu>
       </el-aside>
       <!--右侧主要内容-->
       <el-main>
@@ -43,25 +43,25 @@ export default {
     "zTreeMenu":zTreeMenu,
     "selectOption":selectOption
   },
-  props:["ztreeData"],
+  // props:["ztreeData"],
   data:function(){
     return {
-      otpion:[{"id":"test","type":"test"},{"id":"test","type":"test"}],
-      // ztreeData:[
-      //   { name:"父节点1 - 展开", open:true,
-			// 	children: [
-			// 		{ name:"父节点11 - 折叠"},
-			// 		{ name:"父节点12 - 折叠"},
-			// 		{ name:"父节点13 - 没有子节点", isParent:true}
-			// 	]},
-			//     { name:"父节点2 - 折叠",
-			// 	children: [
-			// 		{ name:"父节点21 - 展开", open:true},
-			// 		{ name:"父节点22 - 折叠"},
-			// 		{ name:"父节点23 - 折叠"}
-			// 	]},
-			//     { name:"父节点3 - 没有子节点", isParent:true}  
-      // ]
+      otpion:[{"id":"1","type":"2"},{"id":"3","type":"4"}],
+      ztreeJson:[
+        { name:"父节点1 - 展开", open:true,
+				children: [
+					{ name:"父节点11 - 折叠"},
+					{ name:"父节点12 - 折叠"},
+					{ name:"父节点13 - 没有子节点", isParent:true}
+				]},
+			    { name:"父节点2 - 折叠",
+				children: [
+					{ name:"父节点21 - 展开", open:true},
+					{ name:"父节点22 - 折叠"},
+					{ name:"父节点23 - 折叠"}
+				]},
+			    { name:"父节点3 - 没有子节点", isParent:true}  
+      ]
     }
   }
 }
