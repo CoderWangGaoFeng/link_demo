@@ -1,0 +1,37 @@
+<template>
+    <div>
+        <el-row style="background-color:#D4DEFF" class="optionBorder">
+                <el-col :span="4" class="mainHeader-contentPosition">
+                    <el-checkbox v-model="divShowOrHide" style="padding-left:5px;">年月</el-checkbox>
+                </el-col>
+                <el-col :span="20" class="mainHeader-contentPosition">
+                    <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
+                    <el-date-picker
+                            v-model="monthValue"
+                            type="monthrange"
+                            range-separator="至"
+                            start-placeholder="开始日期"
+                            end-placeholder="结束日期"  size="small" style="margin-left:40px;">
+                    </el-date-picker>
+                </el-col>
+        </el-row>
+    </div>
+</template>
+
+<script>
+export default {
+    data:function(){
+            return {
+                divShowOrHide:true,
+                optionShowOrHide:true,
+                monthValue: '',
+                dayValue: '',
+            }
+      }
+}
+</script>
+<style scoped>
+.optionBorder{
+    border-top:#ffffff 1px solid;
+}
+</style>

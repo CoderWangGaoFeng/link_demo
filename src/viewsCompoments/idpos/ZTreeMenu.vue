@@ -7,6 +7,7 @@
 <script>
 import $ from 'jquery'
 import Ztree from '@ztree/ztree_v3/js/jquery.ztree.core.js'
+import ZtreeCheck from '@ztree/ztree_v3/js/jquery.ztree.excheck.js'
 import '@ztree/ztree_v3/css/zTreeStyle/zTreeStyle.css'
 export default {
     //获取父级组件传递过来的参数
@@ -15,7 +16,14 @@ export default {
         //通过return 返回数据，防止有多个ztree之间互相影响
         return {
             //ztree基础设置
-            setting:{},                          
+            setting:{
+                check:{
+                    enable:true
+                },
+                view: {
+                    showIcon: false
+                }
+            },                          
         }
     },
     //定义当前组件中的事件

@@ -1,13 +1,12 @@
 <template>
+<div>
       <el-row style="background-color:#D4DEFF" class="optionBorder">
             <el-col :span="4" class="mainHeader-contentPosition">
-                  <el-checkbox v-model="divShowOrHide" style="padding-left:5px;">测试1</el-checkbox>
+                  <el-checkbox v-model="divShowOrHide" style="padding-left:5px;">店铺</el-checkbox>
             </el-col>
-            <el-col :span="2" class="mainHeader-contentPosition">
-                  <el-checkbox v-model="optionShowOrHide"></el-checkbox>
-            </el-col>
-            <el-col :span="18" class="mainHeader-contentPosition">
-                  <el-select v-model="value" filterable placeholder="请选择" size="small">
+            <el-col :span="20" class="mainHeader-contentPosition">
+                  <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
+                  <el-select v-model="value" filterable placeholder="请选择" size="small" style="width:300px;margin-left:40px;">
                         <el-option
                               v-for="item in options"
                               :key="item.value"
@@ -19,6 +18,7 @@
                   <el-button type="text" style="margin-left:20px;">清空选择</el-button>
             </el-col>
       </el-row>
+</div>
 </template>
 
 <script>

@@ -9,8 +9,11 @@
       <div class="mainHeader">
         <el-row>
           <el-col :span="4" class="mainHeader-contentPosition">项目</el-col>
-          <el-col :span="2" class="mainHeader-contentPosition">显示</el-col>
-          <el-col :span="14" class="mainHeader-contentPosition">条件</el-col>
+          <el-col :span="16" class="mainHeader-contentPosition">
+              <label>显示</label>
+              <label style="margin-left:30px;">条件</label>
+          </el-col>
+          <!-- <el-col :span="14" class="mainHeader-contentPosition">条件</el-col> -->
           <el-col :span="4" class="mainHeader-contentPosition">收藏</el-col>
         </el-row>
       </div>
@@ -22,9 +25,10 @@
       </el-aside>
       <!--右侧主要内容-->
       <el-main>
-        <selectOption class="textPosition" 
-          v-for="item in otpion" :key="item.id">
-        </selectOption>
+        <divDateOption class="textPosition"></divDateOption>
+        <selectOption class="textPosition" ></selectOption>
+        <divButtonOption class="textPosition"></divButtonOption>
+        <divButtonInputOption class="textPosition"></divButtonInputOption>
       </el-main>
     </el-container>
     <!--页脚-->
@@ -35,32 +39,43 @@
 <script>
 import zTreeMenu from '@/viewsCompoments/idpos/ZTreeMenu.vue'
 import selectOption from '@/viewsCompoments/idpos/OptionForSelectModule.vue'
+import divDateOption from '@/viewsCompoments/idpos/DateOption.vue'
+import divButtonOption from '@/viewsCompoments/idpos/ButtonOption.vue'
+import divButtonInputOption from '@/viewsCompoments/idpos/ButtonInputOption.vue'
 
 export default {
   name:'idpos',
   components:{
     //存放该页面特有的组件
     "zTreeMenu":zTreeMenu,
-    "selectOption":selectOption
+    "selectOption":selectOption,
+    "divDateOption":divDateOption,
+    "divButtonOption":divButtonOption,
+    "divButtonInputOption":divButtonInputOption
   },
   // props:["ztreeData"],
   data:function(){
     return {
       otpion:[{"id":"1","type":"2"},{"id":"3","type":"4"}],
       ztreeJson:[
-        { name:"父节点1 - 展开", open:true,
-				children: [
-					{ name:"父节点11 - 折叠"},
-					{ name:"父节点12 - 折叠"},
-					{ name:"父节点13 - 没有子节点", isParent:true}
+        { name:"时间条件",isParent:true,
+				  children: [
+					{ name:"年月"},
+					{ name:"日期"},
 				]},
-			    { name:"父节点2 - 折叠",
-				children: [
-					{ name:"父节点21 - 展开", open:true},
-					{ name:"父节点22 - 折叠"},
-					{ name:"父节点23 - 折叠"}
+			  { name:"商品条件",isParent:true,
+				  children: [
+				  { name:"大分类"},
+					{ name:"小分类"},
+					{ name:"细分类"}
 				]},
-			    { name:"父节点3 - 没有子节点", isParent:true}  
+        { name:"店铺条件", isParent:true,
+          children:[{name:"分区"},{name:"分店"},{name:"店铺"}]},
+        { name:"聚合条件", isParent:true,children: [
+            { name:"会员数量"},
+            { name:"客户数量"},
+            { name:"单价"}
+        ]}
       ]
     }
   }
