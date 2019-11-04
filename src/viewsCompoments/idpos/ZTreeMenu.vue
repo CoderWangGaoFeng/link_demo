@@ -6,9 +6,9 @@
 
 <script>
 import $ from 'jquery'
-import Ztree from '@ztree/ztree_v3/js/jquery.ztree.core.js'
-import ZtreeCheck from '@ztree/ztree_v3/js/jquery.ztree.excheck.js'
 import '@ztree/ztree_v3/css/zTreeStyle/zTreeStyle.css'
+import '@ztree/ztree_v3/js/jquery.ztree.core.js'
+import '@ztree/ztree_v3/js/jquery.ztree.excheck.js'
 export default {
     //获取父级组件传递过来的参数
     props: ['zTreeData'],

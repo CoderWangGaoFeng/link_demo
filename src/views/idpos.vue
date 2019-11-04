@@ -58,24 +58,10 @@ export default {
     return {
       otpion:[{"id":"1","type":"2"},{"id":"3","type":"4"}],
       ztreeJson:[
-        { name:"时间条件",isParent:true,
-				  children: [
-					{ name:"年月"},
-					{ name:"日期"},
-				]},
-			  { name:"商品条件",isParent:true,
-				  children: [
-				  { name:"大分类"},
-					{ name:"小分类"},
-					{ name:"细分类"}
-				]},
-        { name:"店铺条件", isParent:true,
-          children:[{name:"分区"},{name:"分店"},{name:"店铺"}]},
-        { name:"聚合条件", isParent:true,children: [
-            { name:"会员数量"},
-            { name:"客户数量"},
-            { name:"单价"}
-        ]}
+        {name:"时间条件",isParent:true,children:[{name:"年月"},{name:"日期"}]},
+        {name:"商品条件",isParent:true,children:[{name:"大分类"},{name:"小分类"},{name:"细分类"}]},
+        {name:"店铺条件",isParent:true,children:[{name:"分区"},{name:"分店"},{name:"店铺"}]},
+        {name:"聚合条件",isParent:true,children:[{ name:"会员数量"},{ name:"客户数量"},{ name:"单价"}]}
       ]
     }
   }
