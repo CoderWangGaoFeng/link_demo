@@ -58,7 +58,7 @@ export default {
   },
   data:function(){
     return {
-      otpion:{timeOption:[{name:"年月",type:"monthrange"},{name:"日期",type:"daterange"}],},
+      otpion:{timeOption:[],},
       optionParamList:{
         monthParam:{name:"年月",type:"monthrange"},
         dayParam:{name:"日期",type:"daterange"},
@@ -86,12 +86,29 @@ export default {
     }
   },
   methods:{
-    delTimeOption:function(id){
-      this.otpion.timeOption = [];
-      this.otpion.timeOption.push(this.optionParamList[id]);
+    //处理日期时间的事件
+    delTimeOption:function(ztreeNode){
+      var optionKey = ztreeNode.id.toString();
+      console.log(this.optionParamList[optionKey]);
+      if(ztreeNode && ztreeNode.checked){
+        this.otpion.timeOption = [];
+        this.otpion.timeOption.push(this.optionParamList[optionKey]);
+      }else{
+        this.otpion.timeOption = [];
+      }
+      //新的思路：
+      /**
+       * 通过provide 和 inject这两个属性，将otpion放宽给ztree组件。
+       * 然后通过ztree组件中得方法操作option中得值
+       * https://cn.vuejs.org/v2/guide/components-edge-cases.html#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5
+       */
     },
-    dealZtreeClickFun:function(data){
-      console.log(data);
+    //处理ztree点击事件
+    dealZtreeClickFun:function(ztreeNode){
+      //时间条件点击事件
+      if((ztreeNode.id+"").indexOf("timeOption") > -1){
+        this.delTimeOption(ztreeNode);
+      }
     }
   }
 }
