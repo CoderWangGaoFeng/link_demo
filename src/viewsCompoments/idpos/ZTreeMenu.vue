@@ -35,8 +35,7 @@ export default {
         //ztree选中事件
         ztreeCheck:function(event, treeId, treeNode){
             //调用父级方法
-            console.log(treeNode);
-            this.$emit('testtest',[111]);
+            this.$emit('ztreeClickFun',treeNode);
         }
     },
     //页面渲染后执行

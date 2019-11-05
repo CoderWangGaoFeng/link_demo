@@ -21,12 +21,11 @@
     <el-container>
       <!--左侧菜单栏-->
       <el-aside>
-        <zTreeMenu v-bind:zTreeData="ztreeJson"></zTreeMenu>
+        <zTreeMenu v-bind:zTreeData="ztreeJson" v-on:ztreeClickFun="dealZtreeClickFun"></zTreeMenu>
       </el-aside>
       <!--右侧主要内容-->
       <el-main>
         <divDateOption class="textPosition" 
-          v-on:testtest="ztreeClickFun"
           v-for="item in otpion.timeOption" 
           :key="item.id" :optionParam="item" >
         </divDateOption>
@@ -91,8 +90,7 @@ export default {
       this.otpion.timeOption = [];
       this.otpion.timeOption.push(this.optionParamList[id]);
     },
-    ztreeClickFun:function(data){
-      console.log("456");
+    dealZtreeClickFun:function(data){
       console.log(data);
     }
   }
