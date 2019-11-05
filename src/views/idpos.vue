@@ -25,7 +25,11 @@
       </el-aside>
       <!--右侧主要内容-->
       <el-main>
-        <divDateOption class="textPosition"></divDateOption>
+        <divDateOption class="textPosition" 
+          v-on:testtest="ztreeClickFun"
+          v-for="item in otpion.timeOption" 
+          :key="item.id" :optionParam="item" >
+        </divDateOption>
         <selectOption class="textPosition" ></selectOption>
         <divButtonOption class="textPosition"></divButtonOption>
         <divButtonInputOption class="textPosition"></divButtonInputOption>
@@ -53,16 +57,43 @@ export default {
     "divButtonOption":divButtonOption,
     "divButtonInputOption":divButtonInputOption
   },
-  // props:["ztreeData"],
   data:function(){
     return {
-      otpion:[{"id":"1","type":"2"},{"id":"3","type":"4"}],
+      otpion:{timeOption:[{name:"年月",type:"monthrange"},{name:"日期",type:"daterange"}],},
+      optionParamList:{
+        monthParam:{name:"年月",type:"monthrange"},
+        dayParam:{name:"日期",type:"daterange"},
+        goodsOne:{name:"大分类",type:"goodsOne"},
+        goodsTwo:{name:"中分类",type:"goodsTwo"},
+        goodsThree:{name:"小分类",type:"goodsThree"},
+        storeOne:{name:"分区",type:"storeOne"},
+        storeTwo:{name:"分店",type:"storeTwo"},
+        storeThree:{name:"分店",type:"storeThree"},
+        vipCount:{name:"会员数",type:"vipCount"},
+        cusCount:{name:"客户数",type:"cusCount"}
+      },
       ztreeJson:[
-        {name:"时间条件",isParent:true,children:[{name:"年月"},{name:"日期"}]},
-        {name:"商品条件",isParent:true,children:[{name:"大分类"},{name:"小分类"},{name:"细分类"}]},
-        {name:"店铺条件",isParent:true,children:[{name:"分区"},{name:"分店"},{name:"店铺"}]},
-        {name:"聚合条件",isParent:true,children:[{ name:"会员数量"},{ name:"客户数量"},{ name:"单价"}]}
+        {id:"timeOption",name:"时间条件",isParent:true,children:[{id:"timeOption_month",name:"年月"},{id:"timeOption_date",name:"日期"}]},
+        {id:"goodsOption",name:"商品条件",isParent:true,children:[
+          {id:"goodsOption_one",name:"大分类"},{id:"goodsOption_two",name:"小分类"},{id:"goodsOption_three",name:"细分类"}
+        ]},
+        {id:"storeOption",name:"店铺条件",isParent:true,children:[
+          {id:"storeOption_one",name:"分区"},{id:"storeOption_two",name:"分店"},{id:"storeOption_three",name:"店铺"}
+        ]},
+        {id:"funOption",name:"聚合条件",isParent:true,children:[
+          {id:"funOption_vip",name:"会员数量"},{id:"funOption_cus",name:"客户数量"},{id:"funOption_price",name:"单价"}
+        ]}
       ]
+    }
+  },
+  methods:{
+    delTimeOption:function(id){
+      this.otpion.timeOption = [];
+      this.otpion.timeOption.push(this.optionParamList[id]);
+    },
+    ztreeClickFun:function(data){
+      console.log("456");
+      console.log(data);
     }
   }
 }

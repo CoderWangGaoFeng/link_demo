@@ -22,12 +22,23 @@ export default {
                 },
                 view: {
                     showIcon: false
+                },
+                callback: {
+                    //取消或选中回调函数
+                    onCheck: this.ztreeCheck
                 }
             },                          
         }
     },
     //定义当前组件中的事件
-    methods:{},
+    methods:{
+        //ztree选中事件
+        ztreeCheck:function(event, treeId, treeNode){
+            //调用父级方法
+            console.log(treeNode);
+            this.$emit('testtest',[111]);
+        }
+    },
     //页面渲染后执行
     mounted(){
         //初始化ztree并全部展开
