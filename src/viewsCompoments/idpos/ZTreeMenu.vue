@@ -36,6 +36,14 @@ export default {
         ztreeCheck:function(event, treeId, treeNode){
             //调用父级方法
             this.$emit('ztreeClickFun',treeNode);
+        },
+        //ztree取消选中
+        ztreeCancelCheck:function(name){
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+            var node = treeObj.getNodeByParam("name", name, null);
+            if(node){
+                treeObj.checkNode(node, true, true,false);
+            }
         }
     },
     //页面渲染后执行

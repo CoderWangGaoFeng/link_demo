@@ -60,8 +60,8 @@ export default {
     return {
       otpion:{timeOption:[],},
       optionParamList:{
-        monthParam:{name:"年月",type:"monthrange"},
-        dayParam:{name:"日期",type:"daterange"},
+        month:{name:"年月",type:"monthrange"},
+        date:{name:"日期",type:"daterange"},
         goodsOne:{name:"大分类",type:"goodsOne"},
         goodsTwo:{name:"中分类",type:"goodsTwo"},
         goodsThree:{name:"小分类",type:"goodsThree"},
@@ -88,8 +88,7 @@ export default {
   methods:{
     //处理日期时间的事件
     delTimeOption:function(ztreeNode){
-      var optionKey = ztreeNode.id.toString();
-      console.log(this.optionParamList[optionKey]);
+      var optionKey = ztreeNode.id.toString().split("_")[1];
       if(ztreeNode && ztreeNode.checked){
         this.otpion.timeOption = [];
         this.otpion.timeOption.push(this.optionParamList[optionKey]);
