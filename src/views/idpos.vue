@@ -21,7 +21,7 @@
     <el-container>
       <!--左侧菜单栏-->
       <el-aside>
-        <zTreeMenu v-bind:zTreeData="ztreeJson" v-on:ztreeClickFun="dealZtreeClickFun"></zTreeMenu>
+        <zTreeMenu v-bind:zTreeData="ztreeJson" v-on:ztreeClickFun="dealZtreeClickFun" ref="ztreeMenuObj"></zTreeMenu>
       </el-aside>
       <!--右侧主要内容-->
       <el-main>
@@ -72,16 +72,21 @@ export default {
         cusCount:{name:"客户数",type:"cusCount"}
       },
       ztreeJson:[
-        {id:"timeOption",name:"时间条件",isParent:true,children:[{id:"timeOption_month",name:"年月"},{id:"timeOption_date",name:"日期"}]},
-        {id:"goodsOption",name:"商品条件",isParent:true,children:[
-          {id:"goodsOption_one",name:"大分类"},{id:"goodsOption_two",name:"小分类"},{id:"goodsOption_three",name:"细分类"}
-        ]},
-        {id:"storeOption",name:"店铺条件",isParent:true,children:[
-          {id:"storeOption_one",name:"分区"},{id:"storeOption_two",name:"分店"},{id:"storeOption_three",name:"店铺"}
-        ]},
-        {id:"funOption",name:"聚合条件",isParent:true,children:[
-          {id:"funOption_vip",name:"会员数量"},{id:"funOption_cus",name:"客户数量"},{id:"funOption_price",name:"单价"}
-        ]}
+        {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true},
+        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:true},
+        {id:"timeOption_date",pId:"timeOption",name:"日期"},
+        {id:"goodsOption",pId:"0",name:"商品条件"},
+        {id:"goodsOption_one",pId:"goodsOption",name:"大分类"},
+        {id:"goodsOption_two",pId:"goodsOption",name:"小分类"},
+        {id:"goodsOption_three",pId:"goodsOption",name:"细分类"},
+        {id:"storeOption",pId:"0",name:"商品条件"},
+        {id:"storeOption_one",pId:"storeOption",name:"分区"},
+        {id:"storeOption_two",pId:"storeOption",name:"分店"},
+        {id:"storeOption_three",pId:"storeOption",name:"店铺"},
+        {id:"funOption",pId:"0",name:"商品条件"},
+        {id:"funOption_vip",pId:"funOption",name:"会员数量"},
+        {id:"funOption_cus",pId:"funOption",name:"客户数量"},
+        {id:"funOption_price",pId:"funOption",name:"平均单价"},
       ]
     }
   },
@@ -90,17 +95,14 @@ export default {
     delTimeOption:function(ztreeNode){
       var optionKey = ztreeNode.id.toString().split("_")[1];
       if(ztreeNode && ztreeNode.checked){
+        if(this.otpion.timeOption.length > 0 ){
+          this.$refs.ztreeMenuObj.ztreeCancelCheck(this.otpion.timeOption[0].name);
+        }
         this.otpion.timeOption = [];
         this.otpion.timeOption.push(this.optionParamList[optionKey]);
       }else{
         this.otpion.timeOption = [];
       }
-      //新的思路：
-      /**
-       * 通过provide 和 inject这两个属性，将otpion放宽给ztree组件。
-       * 然后通过ztree组件中得方法操作option中得值
-       * https://cn.vuejs.org/v2/guide/components-edge-cases.html#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5
-       */
     },
     //处理ztree点击事件
     dealZtreeClickFun:function(ztreeNode){

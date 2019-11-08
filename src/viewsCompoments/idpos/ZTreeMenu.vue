@@ -23,6 +23,13 @@ export default {
                 view: {
                     showIcon: false
                 },
+                data:{
+                    simpleData:{
+                        enable:true,
+                        idKey:"id",
+                        pIdKey:"pId"
+                    }
+                },
                 callback: {
                     //取消或选中回调函数
                     onCheck: this.ztreeCheck
@@ -42,7 +49,7 @@ export default {
             var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
             var node = treeObj.getNodeByParam("name", name, null);
             if(node){
-                treeObj.checkNode(node, true, true,false);
+                treeObj.checkNode(node, false, true,false);
             }
         }
     },
