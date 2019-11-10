@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="optionParam.checked">
         <el-row style="background-color:#D4DEFF" class="optionBorder">
                 <el-col :span="4" class="mainHeader-contentPosition">
-                    <el-checkbox v-model="divShowOrHide" style="padding-left:5px;">{{optionParam.name}}</el-checkbox>
+                    <el-checkbox v-model="optionParam.checked" style="padding-left:5px;">{{optionParam.name}}</el-checkbox>
                 </el-col>
                 <el-col :span="20" class="mainHeader-contentPosition">
                     <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
@@ -23,7 +23,7 @@ export default {
     props:["optionParam"],
     data:function(){
             return {
-                divShowOrHide:true,
+                divShowOrHide:this.optionParam.checked,
                 optionShowOrHide:true,
                 monthValue: '',
                 dayValue: '',

@@ -26,12 +26,21 @@
       <!--右侧主要内容-->
       <el-main>
         <divDateOption class="textPosition" 
-          v-for="item in otpion.timeOption" 
+          v-for="item in dealZtreeDataForDiv('timeOption')" 
           :key="item.id" :optionParam="item" >
         </divDateOption>
-        <selectOption class="textPosition" ></selectOption>
-        <divButtonOption class="textPosition"></divButtonOption>
-        <divButtonInputOption class="textPosition"></divButtonInputOption>
+        <selectOption class="textPosition" 
+          v-for="item in dealZtreeDataForDiv('goodsOption')" 
+          :key="item.id" :optionParam="item" >
+        </selectOption>
+        <divButtonOption class="textPosition"
+          v-for="item in dealZtreeDataForDiv('storeOption')" 
+          :key="item.id" :optionParam="item" >
+        </divButtonOption>
+        <divButtonInputOption class="textPosition"
+          v-for="item in dealZtreeDataForDiv('funOption')" 
+          :key="item.id" :optionParam="item">
+        </divButtonInputOption>
       </el-main>
     </el-container>
     <!--页脚-->
@@ -58,57 +67,64 @@ export default {
   },
   data:function(){
     return {
-      otpion:{timeOption:[],},
-      optionParamList:{
-        month:{name:"年月",type:"monthrange"},
-        date:{name:"日期",type:"daterange"},
-        goodsOne:{name:"大分类",type:"goodsOne"},
-        goodsTwo:{name:"中分类",type:"goodsTwo"},
-        goodsThree:{name:"小分类",type:"goodsThree"},
-        storeOne:{name:"分区",type:"storeOne"},
-        storeTwo:{name:"分店",type:"storeTwo"},
-        storeThree:{name:"分店",type:"storeThree"},
-        vipCount:{name:"会员数",type:"vipCount"},
-        cusCount:{name:"客户数",type:"cusCount"}
-      },
       ztreeJson:[
-        {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true},
-        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:true},
-        {id:"timeOption_date",pId:"timeOption",name:"日期"},
-        {id:"goodsOption",pId:"0",name:"商品条件"},
-        {id:"goodsOption_one",pId:"goodsOption",name:"大分类"},
-        {id:"goodsOption_two",pId:"goodsOption",name:"小分类"},
-        {id:"goodsOption_three",pId:"goodsOption",name:"细分类"},
-        {id:"storeOption",pId:"0",name:"商品条件"},
-        {id:"storeOption_one",pId:"storeOption",name:"分区"},
-        {id:"storeOption_two",pId:"storeOption",name:"分店"},
-        {id:"storeOption_three",pId:"storeOption",name:"店铺"},
-        {id:"funOption",pId:"0",name:"商品条件"},
-        {id:"funOption_vip",pId:"funOption",name:"会员数量"},
-        {id:"funOption_cus",pId:"funOption",name:"客户数量"},
-        {id:"funOption_price",pId:"funOption",name:"平均单价"},
+        {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true,checked:false},
+        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false},
+        {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false},
+        {id:"goodsOption",pId:"0",name:"商品条件",checked:false},
+        {id:"goodsOption_one",pId:"goodsOption",name:"大分类",checked:false},
+        {id:"goodsOption_two",pId:"goodsOption",name:"小分类",checked:false},
+        {id:"goodsOption_three",pId:"goodsOption",name:"细分类",checked:false},
+        {id:"storeOption",pId:"0",name:"商品条件",checked:false},
+        {id:"storeOption_one",pId:"storeOption",name:"分区",checked:false},
+        {id:"storeOption_two",pId:"storeOption",name:"分店",checked:false},
+        {id:"storeOption_three",pId:"storeOption",name:"店铺",checked:false},
+        {id:"funOption",pId:"0",name:"商品条件",checked:false},
+        {id:"funOption_vip",pId:"funOption",name:"会员数量",checked:false},
+        {id:"funOption_cus",pId:"funOption",name:"客户数量",checked:false},
+        {id:"funOption_price",pId:"funOption",name:"平均单价",checked:false},
       ]
     }
   },
-  methods:{
-    //处理日期时间的事件
-    delTimeOption:function(ztreeNode){
-      var optionKey = ztreeNode.id.toString().split("_")[1];
-      if(ztreeNode && ztreeNode.checked){
-        if(this.otpion.timeOption.length > 0 ){
-          this.$refs.ztreeMenuObj.ztreeCancelCheck(this.otpion.timeOption[0].name);
+  computed:{
+    //用于过滤数据并被v-for循环
+    dealZtreeDataForDiv(){
+      return function(type){
+        var list = [];
+        var index = 0 ;
+        for ( index in this.ztreeJson){
+          if(this.ztreeJson[index].id.toString().indexOf(type) > -1 
+            && this.ztreeJson[index].id.toString().split("_").length > 1){
+            list.push(this.ztreeJson[index]);
+          }
         }
-        this.otpion.timeOption = [];
-        this.otpion.timeOption.push(this.optionParamList[optionKey]);
-      }else{
-        this.otpion.timeOption = [];
+        return list;
       }
-    },
+    }
+  },
+  watch:{
+    //监听div得选中状态。及时改变ztree得状态
+    ztreeJson:{
+      handler() {
+        var index = 0 ;
+        for ( index in this.ztreeJson){
+          var ztreeFlag = this.$refs.ztreeMenuObj.getZtreeCheckBoxStatus(this.ztreeJson[index].name)
+          if(this.ztreeJson[index].checked != ztreeFlag && this.ztreeJson[index].pId != 0){
+            this.$refs.ztreeMenuObj.ztreeCancelCheck(this.ztreeJson[index].name);
+          }
+        }
+      },
+      deep: true
+    }
+  },
+  methods:{
     //处理ztree点击事件
     dealZtreeClickFun:function(ztreeNode){
-      //时间条件点击事件
-      if((ztreeNode.id+"").indexOf("timeOption") > -1){
-        this.delTimeOption(ztreeNode);
+      var index = 0 ;
+      for ( index in this.ztreeJson){
+        if(this.ztreeJson[index].id == ztreeNode.id){
+          this.ztreeJson[index].checked=ztreeNode.checked;
+        }
       }
     }
   }

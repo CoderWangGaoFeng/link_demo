@@ -51,6 +51,12 @@ export default {
             if(node){
                 treeObj.checkNode(node, false, true,false);
             }
+        },
+        //ztree选项框状态
+        getZtreeCheckBoxStatus(name){
+            var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+            var node = treeObj.getNodeByParam("name", name, null);
+            return node.checked;
         }
     },
     //页面渲染后执行
