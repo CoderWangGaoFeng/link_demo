@@ -69,8 +69,8 @@ export default {
     return {
       ztreeJson:[
         {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true,checked:false},
-        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false},
-        {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false},
+        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false,value:{dateType:"monthrange",dateValue:""}},
+        {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false,value:{dateType:"daterange",dateValue:""}},
         {id:"goodsOption",pId:"0",name:"商品条件",checked:false},
         {id:"goodsOption_one",pId:"goodsOption",name:"大分类",checked:false},
         {id:"goodsOption_two",pId:"goodsOption",name:"小分类",checked:false},
@@ -103,13 +103,14 @@ export default {
     }
   },
   watch:{
-    //监听div得选中状态。及时改变ztree得状态
+    //监听div得选中状态。及时改变ztree状态
     ztreeJson:{
       handler() {
         var index = 0 ;
         for ( index in this.ztreeJson){
-          var ztreeFlag = this.$refs.ztreeMenuObj.getZtreeCheckBoxStatus(this.ztreeJson[index].name)
-          if(this.ztreeJson[index].checked != ztreeFlag && this.ztreeJson[index].pId != 0){
+          var ztreeName = this.ztreeJson[index].name.toString();
+          var ztreeStatus = this.$refs.ztreeMenuObj.getZtreeCheckBoxStatus(ztreeName)
+          if(this.ztreeJson[index].checked != ztreeStatus && this.ztreeJson[index].pId != 0){
             this.$refs.ztreeMenuObj.ztreeCancelCheck(this.ztreeJson[index].name);
           }
         }
@@ -121,9 +122,32 @@ export default {
     //处理ztree点击事件
     dealZtreeClickFun:function(ztreeNode){
       var index = 0 ;
-      for ( index in this.ztreeJson){
-        if(this.ztreeJson[index].id == ztreeNode.id){
-          this.ztreeJson[index].checked=ztreeNode.checked;
+      var ztreeId = ztreeNode.id.toString();
+      var parentZtreeIdList = ["goodsOption","storeOption","funOption"];
+      if(parentZtreeIdList.indexOf(ztreeId) > -1 ){
+        //父级菜单选中事件
+        for ( index in this.ztreeJson){
+          if(this.ztreeJson[index].id.toString().indexOf(ztreeId) > -1 ){
+            this.ztreeJson[index].checked=ztreeNode.checked;
+          }
+        }
+      }else{
+        for ( index in this.ztreeJson ){
+          if(this.ztreeJson[index].id == ztreeNode.id){
+            if( ztreeNode.checked && ztreeNode.id.toString().indexOf("timeOption") > -1 ){
+              //当选中的条件为时间条件下的子类时，需要判断是否需要排斥掉另外一条时间条件
+              this.dealTimeOptionStatus(ztreeNode.name.toString());
+            }
+            this.ztreeJson[index].checked=ztreeNode.checked;
+          }
+        }
+      }
+    },
+    //处理时间条件互斥
+    dealTimeOptionStatus(name){
+      for (  var i = 1 ; i < 3 ; i++ ) {
+        if(this.ztreeJson[i].name != name && this.ztreeJson[i].checked == true ){
+          this.ztreeJson[i].checked = false;
         }
       }
     }

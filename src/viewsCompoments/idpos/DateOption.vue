@@ -7,8 +7,8 @@
                 <el-col :span="20" class="mainHeader-contentPosition">
                     <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
                     <el-date-picker
-                            v-model="monthValue"
-                            :type="optionParam.type"
+                            v-model="optionParam.value.dateValue"
+                            :type="optionParam.value.dateType"
                             range-separator="至"
                             start-placeholder="开始日期"
                             end-placeholder="结束日期"  size="small" style="margin-left:40px;width:300px;">
