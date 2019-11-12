@@ -1,6 +1,6 @@
 <template>
     <div v-if="optionParam.checked">
-        <el-row style="background-color:#D4DEFF" class="optionBorder">
+        <el-row :style="{backgroundColor:optionParam.color}" class="optionBorder">
                 <el-col :span="4" class="mainHeader-contentPosition">
                     <el-checkbox v-model="optionParam.checked" style="padding-left:5px;">{{optionParam.name}}</el-checkbox>
                 </el-col>

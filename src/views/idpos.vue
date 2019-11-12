@@ -30,11 +30,15 @@
           :key="item.id" :optionParam="item" >
         </divDateOption>
         <selectOption class="textPosition" 
+          v-for="item in dealZtreeDataForDiv('storeOption')" 
+          :key="item.id" :optionParam="item" >
+        </selectOption>
+        <selectOption class="textPosition" 
           v-for="item in dealZtreeDataForDiv('goodsOption')" 
           :key="item.id" :optionParam="item" >
         </selectOption>
         <divButtonOption class="textPosition"
-          v-for="item in dealZtreeDataForDiv('storeOption')" 
+          v-for="item in dealZtreeDataForDiv('goodsList')" 
           :key="item.id" :optionParam="item" >
         </divButtonOption>
         <divButtonInputOption class="textPosition"
@@ -69,20 +73,21 @@ export default {
     return {
       ztreeJson:[
         {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true,checked:false},
-        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false,value:{dateType:"monthrange",dateValue:""}},
-        {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false,value:{dateType:"daterange",dateValue:""}},
-        {id:"goodsOption",pId:"0",name:"商品条件",checked:false},
-        {id:"goodsOption_one",pId:"goodsOption",name:"大分类",checked:false},
-        {id:"goodsOption_two",pId:"goodsOption",name:"小分类",checked:false},
-        {id:"goodsOption_three",pId:"goodsOption",name:"细分类",checked:false},
+        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false,color:"#E2FEDE",value:{dateType:"monthrange",dateValue:""}},
+        {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false,color:"#E2FEDE",value:{dateType:"daterange",dateValue:""}},
         {id:"storeOption",pId:"0",name:"商品条件",checked:false},
-        {id:"storeOption_one",pId:"storeOption",name:"分区",checked:false},
-        {id:"storeOption_two",pId:"storeOption",name:"分店",checked:false},
-        {id:"storeOption_three",pId:"storeOption",name:"店铺",checked:false},
+        {id:"storeOption_one",pId:"storeOption",name:"分区",checked:false,color:"#FFF4CC"},
+        {id:"storeOption_two",pId:"storeOption",name:"分店",checked:false,color:"#FFF4CC"},
+        {id:"storeOption_three",pId:"storeOption",name:"店铺",checked:false,color:"#FFF4CC"},
+        {id:"goodsOption",pId:"0",name:"商品条件",checked:false},
+        {id:"goodsOption_one",pId:"goodsOption",name:"大分类",checked:false,color:"#D4DEFF"},
+        {id:"goodsOption_two",pId:"goodsOption",name:"小分类",checked:false,color:"#D4DEFF"},
+        {id:"goodsOption_three",pId:"goodsOption",name:"细分类",checked:false,color:"#D4DEFF"},
+        {id:"goodsList",pId:"goodsOption",name:"商品选择",checked:false,color:"#D4DEFF"},
         {id:"funOption",pId:"0",name:"商品条件",checked:false},
-        {id:"funOption_vip",pId:"funOption",name:"会员数量",checked:false},
-        {id:"funOption_cus",pId:"funOption",name:"客户数量",checked:false},
-        {id:"funOption_price",pId:"funOption",name:"平均单价",checked:false},
+        {id:"funOption_vip",pId:"funOption",name:"会员数量",checked:false,color:"#FFFFFF"},
+        {id:"funOption_cus",pId:"funOption",name:"客户数量",checked:false,color:"#FFFFFF"},
+        {id:"funOption_price",pId:"funOption",name:"平均单价",checked:false,color:"#FFFFFF"},
       ]
     }
   },
@@ -94,7 +99,7 @@ export default {
         var index = 0 ;
         for ( index in this.ztreeJson){
           if(this.ztreeJson[index].id.toString().indexOf(type) > -1 
-            && this.ztreeJson[index].id.toString().split("_").length > 1){
+            && this.ztreeJson[index].pId != "0"){
             list.push(this.ztreeJson[index]);
           }
         }
@@ -127,7 +132,7 @@ export default {
       if(parentZtreeIdList.indexOf(ztreeId) > -1 ){
         //父级菜单选中事件
         for ( index in this.ztreeJson){
-          if(this.ztreeJson[index].id.toString().indexOf(ztreeId) > -1 ){
+          if(this.ztreeJson[index].pId == ztreeId ){
             this.ztreeJson[index].checked=ztreeNode.checked;
           }
         }
