@@ -1,23 +1,25 @@
 <template>
-<div v-if="optionParam.checked">
-      <el-row :style="{backgroundColor:optionParam.color}" class="optionBorder">
-            <el-col :span="4" class="mainHeader-contentPosition">
-                  <el-checkbox v-model="optionParam.checked" style="padding-left:5px;">{{optionParam.name}}</el-checkbox>
-            </el-col>
-            <el-col :span="20" class="mainHeader-contentPosition">
-                  <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
-                  <el-select v-model="value" filterable placeholder="请选择" size="small" style="width:300px;margin-left:40px;">
-                        <el-option
-                              v-for="item in options"
-                              :key="item.value"
-                              :label="item.label"
-                              :value="item.value">
-                        </el-option>
-                  </el-select>
-                  <el-button type="text" style="margin-left:20px;">复数选择</el-button>
-                  <el-button type="text" style="margin-left:20px;">清空选择</el-button>
-            </el-col>
-      </el-row>
+<div>
+      <div v-for="item in optionParam" :key="item.id" :style="{display:showOrHiddenDiv(item.checked)}">
+            <el-row :style="{backgroundColor:item.color}" class="optionBorder">
+                  <el-col :span="4" class="mainHeader-contentPosition">
+                        <el-checkbox v-model="item.checked" style="padding-left:5px;">{{item.name}}</el-checkbox>
+                  </el-col>
+                  <el-col :span="20" class="mainHeader-contentPosition">
+                        <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
+                        <el-select v-model="value" filterable placeholder="请选择" size="small" style="width:300px;margin-left:40px;">
+                              <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                              </el-option>
+                        </el-select>
+                        <el-button type="text" style="margin-left:20px;">复数选择</el-button>
+                        <el-button type="text" style="margin-left:20px;">清空选择</el-button>
+                  </el-col>
+            </el-row>
+      </div>
 </div>
 </template>
 
@@ -25,7 +27,7 @@
 export default {
       props:{
             optionParam:{
-                  type:Object
+                  type:Array
             }
       },
       data:function(){
@@ -41,7 +43,19 @@ export default {
                   ],
                   value: ''
             }
+      },
+      computed:{
+        //计算属性，控制div是否显示
+        showOrHiddenDiv(){
+            return function(status){
+                if(status){
+                    return "";
+                }else{
+                    return "none"
+                }
+            }
       }
+    }
 }
 </script>
 <style>

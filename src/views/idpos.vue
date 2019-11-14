@@ -21,29 +21,19 @@
     <el-container>
       <!--左侧菜单栏-->
       <el-aside>
-        <zTreeMenu v-bind:zTreeData="ztreeJson" v-on:ztreeClickFun="dealZtreeClickFun" ref="ztreeMenuObj"></zTreeMenu>
+        <zTreeMenu v-bind:zTreeData="ztreeJson" ref="ztreeMenuObj"></zTreeMenu>
       </el-aside>
       <!--右侧主要内容-->
       <el-main>
-        <divDateOption class="textPosition" 
-          v-for="item in dealZtreeDataForDiv('timeOption')" 
-          :key="item.id" :optionParam="item" >
+        <divDateOption class="textPosition" :optionParam="dealZtreeDataForDiv('timeOption')" >
         </divDateOption>
-        <selectOption class="textPosition" 
-          v-for="item in dealZtreeDataForDiv('storeOption')" 
-          :key="item.id" :optionParam="item" >
+        <selectOption class="textPosition" :optionParam="dealZtreeDataForDiv('storeOption')" >
         </selectOption>
-        <selectOption class="textPosition" 
-          v-for="item in dealZtreeDataForDiv('goodsOption')" 
-          :key="item.id" :optionParam="item" >
+        <selectOption class="textPosition" :optionParam="dealZtreeDataForDiv('goodsOption')" >
         </selectOption>
-        <divButtonOption class="textPosition"
-          v-for="item in dealZtreeDataForDiv('goodsList')" 
-          :key="item.id" :optionParam="item" >
+        <divButtonOption class="textPosition" :optionParam="dealZtreeDataForDiv('goodsList')" >
         </divButtonOption>
-        <divButtonInputOption class="textPosition"
-          v-for="item in dealZtreeDataForDiv('funOption')" 
-          :key="item.id" :optionParam="item">
+        <divButtonInputOption class="textPosition" :optionParam="dealZtreeDataForDiv('funOption')">
         </divButtonInputOption>
       </el-main>
     </el-container>

@@ -1,34 +1,52 @@
 <template>
-    <div v-if="optionParam.checked">
-        <el-row :style="{backgroundColor:optionParam.color}" class="optionBorder">
-                <el-col :span="4" class="mainHeader-contentPosition">
-                    <el-checkbox v-model="optionParam.checked" style="padding-left:5px;">{{optionParam.name}}</el-checkbox>
-                </el-col>
-                <el-col :span="20" class="mainHeader-contentPosition">
-                    <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
-                    <el-date-picker
-                            v-model="optionParam.value.dateValue"
-                            :type="optionParam.value.dateType"
-                            range-separator="至"
-                            start-placeholder="开始日期"
-                            end-placeholder="结束日期"  size="small" style="margin-left:40px;width:300px;">
-                    </el-date-picker>
-                </el-col>
-        </el-row>
+    <div>
+        <div v-for="item in optionParam" :key="item.id" :style="{display:showOrHiddenDiv(item.checked)}">
+            <el-row :style="{backgroundColor:item.color}" class="optionBorder">
+                    <el-col :span="4" class="mainHeader-contentPosition">
+                        <el-checkbox v-model="item.checked" style="padding-left:5px;">{{item.name}}</el-checkbox>
+                    </el-col>
+                    <el-col :span="20" class="mainHeader-contentPosition">
+                        <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
+                        <el-date-picker
+                                v-model="item.value.dateValue"
+                                :type="item.value.dateType"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期"  size="small" style="margin-left:40px;width:300px;">
+                        </el-date-picker>
+                    </el-col>
+            </el-row>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    props:["optionParam"],
+    props:{
+        optionParam:{
+            type:Array
+        }
+    },
     data:function(){
-            return {
-                divShowOrHide:this.optionParam.checked,
-                optionShowOrHide:true,
-                monthValue: '',
-                dayValue: '',
+        return {
+            divShowOrHide:this.optionParam.checked,
+            optionShowOrHide:true,
+            monthValue: '',
+            dayValue: '',
+        }
+    },
+    computed:{
+        //计算属性，控制div是否显示
+        showOrHiddenDiv(){
+            return function(status){
+                if(status){
+                    return "";
+                }else{
+                    return "none"
+                }
             }
-      }
+        }
+    }
 }
 </script>
 <style scoped>
