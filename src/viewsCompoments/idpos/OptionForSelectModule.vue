@@ -6,7 +6,7 @@
                         <el-checkbox v-model="item.checked" style="padding-left:5px;">{{item.name}}</el-checkbox>
                   </el-col>
                   <el-col :span="20" class="mainHeader-contentPosition">
-                        <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
+                        <el-checkbox v-model="item.value.show" style="padding-left:5px;"></el-checkbox>
                         <el-select v-model="item.value.select" :disabled=item.selectFlag @change="getNextSelectOption(index)" filterable placeholder="请选择" size="small" style="width:300px;margin-left:40px;">
                               <el-option
                                     v-for="item in options"
@@ -15,8 +15,8 @@
                                     :value="item.value">
                               </el-option>
                         </el-select>
-                        <el-button type="text" style="margin-left:20px;">复数选择</el-button>
-                        <el-button type="text" style="margin-left:20px;">清空选择</el-button>
+                        <el-button type="text" style="margin-left:20px;">{{buttonText}}</el-button>
+                        <el-button type="text" :style="{marginLeft:'20px',display:clearModuleButton}">清空选择</el-button>
                   </el-col>
             </el-row>
       </div>
@@ -32,8 +32,6 @@ export default {
       },
       data:function(){
             return {
-                  divShowOrHide:true,
-                  optionShowOrHide:true,
                   options: [
                         {value: '',label: ''},
                         {value: '选项1',label: '黄金糕'}, 
@@ -42,7 +40,8 @@ export default {
                         {value: '选项4',label: '龙须面'}, 
                         {value: '选项5',label: '北京烤鸭'}
                   ],
-                  value: ''
+                  buttonText:"复数选择",
+                  clearButtonStatus:"none"
             }
       },
       computed:{
@@ -52,8 +51,19 @@ export default {
                         if(status){
                               return "";
                         }else{
-                              return "none"
+                              return "none";
                         }
+                  }
+            },
+            //通过module是是否有值控制按钮显示隐藏
+            clearModuleButton(){
+                  var vm =this;
+                  if(this.optionParam[0].value.module.length > 0){
+                        vm.buttonText = "更新选择";
+                        return "";
+                  }else{
+                        vm.buttonText = "复数选择";
+                        return "none";
                   }
             }
       },

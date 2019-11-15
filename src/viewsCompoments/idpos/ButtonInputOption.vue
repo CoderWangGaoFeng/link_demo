@@ -6,7 +6,7 @@
                     <el-checkbox v-model="item.checked" style="padding-left:5px;">{{item.name}}</el-checkbox>
                 </el-col>
                 <el-col :span="20" class="mainHeader-contentPosition">
-                    <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
+                    <el-checkbox v-model="item.value.show" style="padding-left:5px;"></el-checkbox>
                     <el-select v-model="item.value.select" filterable placeholder="请选择" size="small" @change="showOrHidenInput(index)" style="width:300px;margin-left:40px;">
                         <el-option
                             v-for="item in options"

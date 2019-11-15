@@ -6,7 +6,7 @@
                         <el-checkbox v-model="item.checked" style="padding-left:5px;">{{item.name}}</el-checkbox>
                     </el-col>
                     <el-col :span="20" class="mainHeader-contentPosition">
-                        <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
+                        <el-checkbox v-model="item.value.show" style="padding-left:5px;"></el-checkbox>
                         <el-date-picker
                                 v-model="item.value.dateValue"
                                 :type="item.value.dateType"
@@ -29,10 +29,6 @@ export default {
     },
     data:function(){
         return {
-            divShowOrHide:this.optionParam.checked,
-            optionShowOrHide:true,
-            monthValue: '',
-            dayValue: '',
         }
     },
     computed:{
