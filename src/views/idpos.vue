@@ -115,7 +115,7 @@ export default {
           var ztreeName = this.ztreeJson[index].name.toString();
           var ztreeStatus = this.$refs.ztreeMenuObj.getZtreeCheckBoxStatus(ztreeName)
           if(this.ztreeJson[index].checked != ztreeStatus && this.ztreeJson[index].pId != 0){
-            this.$refs.ztreeMenuObj.ztreeCancelCheck(this.ztreeJson[index].name);
+            this.$refs.ztreeMenuObj.ztreeCheckStatusChange(this.ztreeJson[index].name,this.ztreeJson[index].checked);
           }
         }
       },
