@@ -56,6 +56,7 @@ export default {
                 for ( index in this.zTreeData){
                     if(this.zTreeData[index].pId == ztreeId ){
                         this.zTreeData[index].checked=treeNode.checked;
+                        if(!treeNode.checked) this.resetDataValue(this.zTreeData[index]);
                     }
                 }
             }else{
@@ -72,9 +73,12 @@ export default {
                                 this.dealSelectMore(treeNode.pId.toString(),ztreeId,treeNode.checked)
                         }
                         this.zTreeData[index].checked=treeNode.checked;
+                        if(!treeNode.checked) this.resetDataValue(this.zTreeData[index]);
                     }
                 }
             }
+            //取消事件
+
         },
         //ztree因数据改变而状态改变事件
         ztreeCheckStatusChange:function(name,status){
@@ -120,6 +124,21 @@ export default {
                     &&  this.zTreeData[i].checked != status ){
                     this.zTreeData[i].checked = status;
                 }
+            }
+        },
+        //方法用于重置value中的数据
+        resetDataValue(data){
+            var defaultVlaue = {module:[],select:"",input:"",show:true}
+            var keys = Object.keys(data.value);
+            for(var i = 0 ; i < keys.length ; i ++ ){
+                data.value[keys[i]] = defaultVlaue[keys[i]];
+            }
+            //hasOwenProperty有bug
+            // if(data.hasOwenProperty("selectFlag") && data.id.toString().split("_")[1] != "one"){
+            //     data.selectFlag = true;
+            // }
+            if(data.selectFlag == false && data.id.toString().split("_")[1] != "one"){
+                data.selectFlag = true;
             }
         }
     },

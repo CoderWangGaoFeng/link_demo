@@ -16,7 +16,7 @@
                               </el-option>
                         </el-select>
                         <el-button type="text" style="margin-left:20px;" @click="showModule = true" >{{buttonText}}</el-button>
-                        <el-button type="text" :style="{marginLeft:'20px',display:clearModuleButton}">清空选择</el-button>
+                        <el-button type="text" :style="{marginLeft:'20px',display:clearModuleButton}" @click="clearModule()">清空选择</el-button>
                   </el-col>
             </el-row>
       </div>
@@ -28,7 +28,7 @@
             <span slot="footer" class="dialog-footer">
             <el-button @click="showModule = false">取 消</el-button>
             <el-button >清空</el-button>
-            <el-button type="primary" @click="showModule = false">确 定</el-button>
+            <el-button type="primary" @click="moduleSubmit()">确 定</el-button>
             </span>
       </el-dialog>
 </div>
@@ -93,6 +93,21 @@ export default {
                               this.optionParam[index+1].selectFlag = false;
                         }
                   }
+            },
+            //模拟module确定按钮
+            moduleSubmit(){
+                  this.optionParam[0].value.module = ["1","2","3"];
+                  this.showModule = false;
+                  for(var i = 0 ; i < this.optionParam.length ; i++ ){
+                        this.optionParam[i].selectFlag=true;
+                        this.optionParam[i].value.select="";
+                  }
+                  
+            },
+            //清理module数据
+            clearModule(){
+                  this.optionParam[0].value.module = [];
+                  this.optionParam[0].selectFlag=false;
             }
       }
 }
