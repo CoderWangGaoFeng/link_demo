@@ -15,11 +15,22 @@
                                     :value="item.value">
                               </el-option>
                         </el-select>
-                        <el-button type="text" style="margin-left:20px;">{{buttonText}}</el-button>
+                        <el-button type="text" style="margin-left:20px;" @click="showModule = true" >{{buttonText}}</el-button>
                         <el-button type="text" :style="{marginLeft:'20px',display:clearModuleButton}">清空选择</el-button>
                   </el-col>
             </el-row>
       </div>
+      <el-dialog
+            title="提示"
+            :visible.sync="showModule"
+            width="30%">
+            <span>模拟module选择</span>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="showModule = false">取 消</el-button>
+            <el-button >清空</el-button>
+            <el-button type="primary" @click="showModule = false">确 定</el-button>
+            </span>
+      </el-dialog>
 </div>
 </template>
 
@@ -41,7 +52,8 @@ export default {
                         {value: '选项5',label: '北京烤鸭'}
                   ],
                   buttonText:"复数选择",
-                  clearButtonStatus:"none"
+                  clearButtonStatus:"none",
+                  showModule:false
             }
       },
       computed:{
