@@ -67,9 +67,9 @@ export default {
                             this.dealTimeOptionStatus(treeNode.name.toString());
                         }
                         //店铺、商品三级联动
-                        if( treeNode.checked && treeNode.pId.toString() == "storeOption" 
-                            || treeNode.checked && treeNode.pId.toString() == "goodsOption" ){
-                            this.dealSelectMore(treeNode.pId.toString(),ztreeId)
+                        if( (treeNode.pId.toString() == "storeOption" || treeNode.pId.toString() == "goodsOption") 
+                            && treeNode.id.toString().indexOf("_")>-1){
+                                this.dealSelectMore(treeNode.pId.toString(),ztreeId,treeNode.checked)
                         }
                         this.zTreeData[index].checked=treeNode.checked;
                     }
@@ -80,8 +80,10 @@ export default {
         ztreeCheckStatusChange:function(name,status){
             var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
             var node = treeObj.getNodeByParam("name", name, null);
+            var checkFlag = false;
+            if(node.pId == "storeOption" || node.pId == "goodsOption") checkFlag = true;
             if(node){
-                treeObj.checkNode(node, status, true,false);
+                treeObj.checkNode(node, status, true,checkFlag);
             }
         },
         //ztree选项框状态
@@ -99,12 +101,24 @@ export default {
             }
         },
         //店铺、商品联动事件
-        dealSelectMore(parentId,childId){
+        dealSelectMore(parentId,childId,status){
+            var selectArr = ["one","two","three"];
+            var index = status ? 0 : 2;
+            var endIndex = selectArr.indexOf(childId.split("_")[1]);
+            var idList = [];
+            //计算出zTreeData的那些id需要修改checked属性
+            while(index != endIndex){
+                idList.push(parentId + "_" + selectArr[index]);
+                if(status){
+                    index ++;
+                }else{
+                    index --;
+                }
+            }
             for(var i = 0 ; i < this.zTreeData.length ; i++ ){
-                if(this.zTreeData[i].pId == parentId && this.zTreeData[i].id == childId){
-                    break;
-                }else if(this.zTreeData[i].pId == parentId && this.zTreeData[i].id != childId){
-                    this.zTreeData[i].checked = true;
+                if(idList.indexOf(this.zTreeData[i].id.toString()) != -1 
+                    &&  this.zTreeData[i].checked != status ){
+                    this.zTreeData[i].checked = status;
                 }
             }
         }
