@@ -9,12 +9,16 @@
       <div class="mainHeader">
         <el-row>
           <el-col :span="4" class="mainHeader-contentPosition">项目</el-col>
-          <el-col :span="16" class="mainHeader-contentPosition">
+          <el-col :span="14" class="mainHeader-contentPosition">
               <label>显示</label>
               <label style="margin-left:30px;">条件</label>
           </el-col>
           <!-- <el-col :span="14" class="mainHeader-contentPosition">条件</el-col> -->
-          <el-col :span="4" class="mainHeader-contentPosition">收藏</el-col>
+          <el-col :span="6" class="mainHeader-contentPosition">
+            <el-input placeholder="请输入内容" v-model="fav" size="small" style="width:200px;">
+              <el-button slot="append" icon="el-icon-plus" ></el-button>
+            </el-input>
+          </el-col>
         </el-row>
       </div>
     </div>
@@ -61,6 +65,7 @@ export default {
   },
   data:function(){
     return {
+      fav:"",
       ztreeJson:[
         {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true,checked:false},
         {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false,color:"#E2FEDE",value:{dateType:"monthrange",dateValue:"",show:true}},

@@ -7,7 +7,7 @@
                 </el-col>
                 <el-col :span="20" class="mainHeader-contentPosition">
                     <el-checkbox v-model="item.value.show" style="padding-left:5px;"></el-checkbox>
-                    <el-select v-model="item.value.select" filterable placeholder="请选择" size="small" @change="showOrHidenInput(index)" style="width:300px;margin-left:40px;">
+                    <el-select v-model="item.value.select" filterable placeholder="请选择" size="small" style="width:300px;margin-left:40px;">
                         <el-option
                             v-for="item in options"
                             :key="item.value"
@@ -31,9 +31,12 @@ export default {
     },
     data:function(){
         return{
-            optionShowOrHide:true,
-            input:"",
-            inputHideOrShow:[false,false,false],
+            inputHideOrShow:function(){
+                var list = [];
+                for ( var i = 0 ; i < this.optionParam.length ; i++ ){
+                    list.push(this.optionParam[i].value)
+                }
+            },
             options:[
                 {value: '',label: ''}, 
                 {value: '>',label: '>'},
@@ -66,13 +69,19 @@ export default {
             }
         }
     },
-    methods:{
-        showOrHidenInput(index){
-            if(this.optionParam[index].value.select != ""){
-                this.inputHideOrShow[index] = true;
-            }else{
-                this.inputHideOrShow[index] = false;
-            }
+    watch:{
+        optionParam:{
+            handler:function(){
+                for(var index = 0 ; index < this.optionParam.length ; index ++ ){
+                    if(this.optionParam[index].value.select != ""){
+                        this.inputHideOrShow[index] = true;
+                    }else{
+                        this.inputHideOrShow[index] = false;
+                        this.optionParam[index].value.input="";
+                    }
+                }
+            },
+            deep:true    
         }
     }
 }
