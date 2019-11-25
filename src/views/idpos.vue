@@ -2,7 +2,7 @@
   <!--elementui 外层大容器-->
   <el-container direction="vertical" id="mastContainer">
     <!--头部-->
-    <pageHeader></pageHeader>
+    <pageHeader :favInfo="favList"></pageHeader>
     <!--内容容器-->
     <div class="idposButtonDiv">
       <div class="ztreeHeader">项目列表</div>
@@ -14,9 +14,9 @@
               <label style="margin-left:30px;">条件</label>
           </el-col>
           <!-- <el-col :span="14" class="mainHeader-contentPosition">条件</el-col> -->
-          <el-col :span="6" class="mainHeader-contentPosition">
+          <el-col :span="6">
             <el-input placeholder="请输入内容" v-model="fav" size="small" style="width:200px;">
-              <el-button slot="append" icon="el-icon-plus" ></el-button>
+              <el-button slot="append" icon="el-icon-plus" @click="saveFav()"></el-button>
             </el-input>
           </el-col>
         </el-row>
@@ -66,6 +66,7 @@ export default {
   data:function(){
     return {
       fav:"",
+      favList:{},
       ztreeJson:[
         {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true,checked:false},
         {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false,color:"#E2FEDE",value:{dateType:"monthrange",dateValue:"",show:true}},
@@ -128,9 +129,13 @@ export default {
     }
   },
   methods:{
-    
+    //收藏fav
+    saveFav(){
+      var newObject = $.extend(true, {}, this.ztreeJson);
+      this.$set(this.favList, this.fav.toString(), newObject)
+      this.fav="";
+    }
   }
-
 }
 </script>
 <style scoped>

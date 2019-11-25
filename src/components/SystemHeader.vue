@@ -7,15 +7,19 @@
                         </div>
                   </el-col>
                   <el-col :span="12" style="text-align:right">
-                        <el-dropdown trigger="click" style="line-height:60px;margin-right:15px;">
+                        <el-dropdown trigger="click" style="line-height:60px;margin-right:15px;" >
                               <span class="el-dropdown-link el-icon-star-on">
                                     お気に入り<i class="el-icon-arrow-down el-icon--right"></i>
                               </span>
                               <el-dropdown-menu slot="dropdown">
-                                    <el-dropdown-item icon="el-icon-close">黄金糕</el-dropdown-item>
+                                    <el-dropdown-item v-for="(item,key) in dealFavInfo" :key="key" @click.native="test2()">
+                                          <el-link type="primary" icon="el-icon-delete" @click.stop="test1()"></el-link>
+                                          <el-link type="primary" :underline="false" style="max-width:260px;overflow:hidden">{{key}}</el-link>
+                                          <el-link type="primary" icon="el-icon-edit" style="margin-left:15px;"></el-link>
+                                    </el-dropdown-item>
                               </el-dropdown-menu>
                         </el-dropdown>
-                        <el-dropdown trigger="click" style="line-height:60px;">
+                        <el-dropdown trigger="click" style="line-height:60px;"  placement="bottom">
                               <span class="el-dropdown-link el-icon-user-solid">
                                     10151939<i class="el-icon-arrow-down el-icon--right"></i>
                               </span>
@@ -28,6 +32,38 @@
       </el-header>
 </template>
 
+<script>
+export default {
+      name:'systemHeader',
+      props:{
+            favInfo:{
+                  type:Object
+            },
+            userInfo:{
+                  type:Object
+            }
+      },
+      data:function(){
+            return {
+                  
+            }
+      },
+      computed:{
+            dealFavInfo(){
+                  return this.favInfo
+            }
+      },
+      methods:{
+            test1(){
+                  console.log("1");
+            },
+            test2(){
+                  console.log("2");
+            }
+      }
+}
+</script>
+
 <style scoped>
       .el-header{
             background:#F8F8F8; 
@@ -37,5 +73,9 @@
             text-align: left;
             line-height: 60px;
             font-size: 1.3em;
+      }
+      .el-dropdown-link {
+            cursor: pointer;
+            color: #409EFF;
       }
 </style>
