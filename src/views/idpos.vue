@@ -2,7 +2,7 @@
   <!--elementui 外层大容器-->
   <el-container direction="vertical" id="mastContainer">
     <!--头部-->
-    <pageHeader :favInfo="favList"></pageHeader>
+    <pageHeader :favInfo="favList" :favStatus="favStat" @parentDealFav="delFav"></pageHeader>
     <!--内容容器-->
     <div class="idposButtonDiv">
       <div class="ztreeHeader">项目列表</div>
@@ -15,7 +15,7 @@
           </el-col>
           <!-- <el-col :span="14" class="mainHeader-contentPosition">条件</el-col> -->
           <el-col :span="6">
-            <el-input placeholder="请输入内容" v-model="fav" size="small" style="width:200px;">
+            <el-input placeholder="请输入内容" v-model="fav" size="small" style="width:200px;" maxlength="30">
               <el-button slot="append" icon="el-icon-plus" @click="saveFav()"></el-button>
             </el-input>
           </el-col>
@@ -67,10 +67,11 @@ export default {
     return {
       fav:"",
       favList:{},
+      favStat:[],
       ztreeJson:[
         {id:"timeOption",pId:"0",name:"时间条件",chkDisabled:true,checked:false},
-        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false,color:"#E2FEDE",value:{dateType:"monthrange",dateValue:"",show:true}},
-        {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false,color:"#E2FEDE",value:{dateType:"daterange",dateValue:"",show:true}},
+        {id:"timeOption_month",pId:"timeOption",name:"年月",checked:false,color:"#E2FEDE",dataType:"monthrange",value:{value:"",show:true}},
+        {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false,color:"#E2FEDE",dataType:"daterange",value:{value:"",show:true}},
         {id:"storeOption",pId:"0",name:"店铺条件",checked:false},
         {id:"storeOption_one",pId:"storeOption",name:"分区",checked:false,color:"#FFF4CC",
           selectFlag:false,value:{select:"",module:[],show:true}},
@@ -134,6 +135,24 @@ export default {
       var newObject = $.extend(true, {}, this.ztreeJson);
       this.$set(this.favList, this.fav.toString(), newObject)
       this.fav="";
+      this.setFavStat();
+      this.$message({
+        message: '保存成功',
+        type: 'success'
+      });
+    },
+    //删除fav
+    delFav(key){
+      this.favList = Object.assign({}, delete(this.favList[key]));
+      this.setFavStat();
+    },
+    //重新设置fav的数据
+    setFavStat(){
+      var arr = [];
+      for( var i = 0 ; i < this.favList.length ; i ++){
+        arr.push(false);
+      }
+      this.favStat = arr;
     }
   }
 }

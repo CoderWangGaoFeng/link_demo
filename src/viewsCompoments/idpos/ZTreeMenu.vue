@@ -128,7 +128,7 @@ export default {
         },
         //方法用于重置value中的数据
         resetDataValue(data){
-            var defaultVlaue = {module:[],select:"",input:"",show:true}
+            var defaultVlaue = {module:[],select:"",input:"",show:true,value:""}
             var keys = Object.keys(data.value);
             for(var i = 0 ; i < keys.length ; i ++ ){
                 data.value[keys[i]] = defaultVlaue[keys[i]];

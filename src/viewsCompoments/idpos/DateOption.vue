@@ -8,8 +8,8 @@
                     <el-col :span="20" class="mainHeader-contentPosition">
                         <el-checkbox v-model="item.value.show" style="padding-left:5px;"></el-checkbox>
                         <el-date-picker
-                                v-model="item.value.dateValue"
-                                :type="item.value.dateType"
+                                v-model="item.value.value"
+                                :type="item.dataType"
                                 range-separator="至"
                                 start-placeholder="开始日期"
                                 end-placeholder="结束日期"  size="small" style="margin-left:40px;width:300px;">
