@@ -84,10 +84,8 @@ export default {
         ztreeCheckStatusChange:function(name,status){
             var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
             var node = treeObj.getNodeByParam("name", name, null);
-            var checkFlag = false;
-            if(node.pId == "storeOption" || node.pId == "goodsOption") checkFlag = true;
             if(node){
-                treeObj.checkNode(node, status, true,checkFlag);
+                treeObj.checkNode(node, status, true,true);
             }
         },
         //ztree选项框状态
@@ -100,6 +98,7 @@ export default {
         dealTimeOptionStatus(name){
             for (  var i = 1 ; i < 3 ; i++ ) {
                 if(this.zTreeData[i].name != name && this.zTreeData[i].checked == true ){
+                    this.resetDataValue(this.zTreeData[i]);
                     this.zTreeData[i].checked = false;
                 }
             }

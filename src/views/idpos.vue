@@ -2,7 +2,7 @@
   <!--elementui 外层大容器-->
   <el-container direction="vertical" id="mastContainer">
     <!--头部-->
-    <pageHeader :favInfo="favList" :favStatus="favStat" @parentDealFav="delFav"></pageHeader>
+    <pageHeader :favInfo="favList" :favStatus="favStat" @parentDealFav="delFav" @parentUpdateFav="updateFav" @parentFavClick="favClick"></pageHeader>
     <!--内容容器-->
     <div class="idposButtonDiv">
       <div class="ztreeHeader">项目列表</div>
@@ -86,7 +86,7 @@ export default {
           selectFlag:true,value:{select:"",module:[],show:true}},
         {id:"goodsOption_three",pId:"goodsOption",name:"细分类",checked:false,color:"#D4DEFF",
           selectFlag:true,value:{select:"",module:[],show:true}},
-        {id:"goodsList",pId:"goodsOption",name:"商品选择",checked:false,color:"#D4DEFF"},
+        {id:"goodsList",pId:"goodsOption",name:"商品选择",checked:false,color:"#D4DEFF",value:{module:[]}},
         {id:"funOption",pId:"0",name:"计算条件",checked:false},
         {id:"funOption_vip",pId:"funOption",name:"会员数量",checked:false,color:"#FFFFFF",
           value:{select:"",input:"",show:true}},
@@ -117,6 +117,7 @@ export default {
     //监听div得选中状态。及时改变ztree状态
     ztreeJson:{
       handler() {
+        console.log("1");
         var index = 0 ;
         for ( index in this.ztreeJson){
           var ztreeName = this.ztreeJson[index].name.toString();
@@ -132,19 +133,35 @@ export default {
   methods:{
     //收藏fav
     saveFav(){
-      var newObject = $.extend(true, {}, this.ztreeJson);
-      this.$set(this.favList, this.fav.toString(), newObject)
-      this.fav="";
-      this.setFavStat();
-      this.$message({
-        message: '保存成功',
-        type: 'success'
-      });
+      var flag = false;
+      for (var i = 0 ; i < this.ztreeJson.length ; i ++ ){
+        if(this.ztreeJson[i].checked){
+          flag = true;
+          break;
+        }
+      }
+      if(flag){
+        var newObject = $.extend(true, {}, this.ztreeJson);
+        this.$set(this.favList, this.fav.toString(), newObject)
+        this.fav="";
+        this.setFavStat();
+        this.$message({
+          message: '保存成功',
+          type: 'success'
+        });
+      }
     },
     //删除fav
     delFav(key){
       this.favList = Object.assign({}, delete(this.favList[key]));
       this.setFavStat();
+    },
+    //修改fav
+    updateFav(arr){
+      var newObject = $.extend(true, {}, this.favList[arr[1]]);
+      delete(this.favList[arr[1]]);
+      this.$set(this.favList, arr[0].toString(), newObject)
+      // this.setFavStat();
     },
     //重新设置fav的数据
     setFavStat(){
@@ -153,6 +170,10 @@ export default {
         arr.push(false);
       }
       this.favStat = arr;
+    },
+    //还原fav保存条件
+    favClick(name){
+      this.ztreeJson = $.extend(true, [], this.favList[name]);
     }
   }
 }
