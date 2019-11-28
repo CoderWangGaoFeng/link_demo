@@ -1,6 +1,6 @@
 <template>
   <!--elementui 外层大容器-->
-  <el-container direction="vertical" id="mastContainer">
+  <el-container direction="vertical" id="mastContainer" style="min-width:1080px;">
     <!--头部-->
     <pageHeader :favInfo="favList" :favStatus="favStat" @parentDealFav="delFav" @parentUpdateFav="updateFav" @parentFavClick="favClick"></pageHeader>
     <!--内容容器-->
@@ -9,9 +9,13 @@
       <div class="mainHeader">
         <el-row>
           <el-col :span="4" class="mainHeader-contentPosition">项目</el-col>
-          <el-col :span="14" class="mainHeader-contentPosition">
-              <label>显示</label>
-              <label style="margin-left:30px;">条件</label>
+          <el-col :span="4" class="mainHeader-contentPosition">
+            <label>显示</label>
+            <label style="margin-left:30px;">条件</label>
+          </el-col>
+          <el-col :span="10" style="text-align:left">
+            <el-button type="primary" plain size="small" style="width:100px;margin-top:1px;">执行</el-button>
+            <el-button plain size="small" style="width:100px;margin-top:1px;">重置</el-button>
           </el-col>
           <!-- <el-col :span="14" class="mainHeader-contentPosition">条件</el-col> -->
           <el-col :span="6">
@@ -74,18 +78,18 @@ export default {
         {id:"timeOption_date",pId:"timeOption",name:"日期",checked:false,color:"#E2FEDE",dataType:"daterange",value:{value:"",show:true}},
         {id:"storeOption",pId:"0",name:"店铺条件",checked:false},
         {id:"storeOption_one",pId:"storeOption",name:"分区",checked:false,color:"#FFF4CC",
-          selectFlag:false,value:{select:"",module:[],show:true}},
+          value:{select:"",module:[],show:true}},
         {id:"storeOption_two",pId:"storeOption",name:"分店",checked:false,color:"#FFF4CC",
-          selectFlag:true,value:{select:"",module:[],show:true}},
+          value:{select:"",module:[],show:true}},
         {id:"storeOption_three",pId:"storeOption",name:"店铺",checked:false,color:"#FFF4CC",
-          selectFlag:true,value:{select:"",module:[],show:true}},
+          value:{select:"",module:[],show:true}},
         {id:"goodsOption",pId:"0",name:"商品条件",checked:false},
         {id:"goodsOption_one",pId:"goodsOption",name:"大分类",checked:false,color:"#D4DEFF",
-          selectFlag:false,value:{select:"",module:[],show:true}},
+          value:{select:"",module:[],show:true}},
         {id:"goodsOption_two",pId:"goodsOption",name:"小分类",checked:false,color:"#D4DEFF",
-          selectFlag:true,value:{select:"",module:[],show:true}},
+          value:{select:"",module:[],show:true}},
         {id:"goodsOption_three",pId:"goodsOption",name:"细分类",checked:false,color:"#D4DEFF",
-          selectFlag:true,value:{select:"",module:[],show:true}},
+          value:{select:"",module:[],show:true}},
         {id:"goodsList",pId:"goodsOption",name:"商品选择",checked:false,color:"#D4DEFF",value:{module:[]}},
         {id:"funOption",pId:"0",name:"计算条件",checked:false},
         {id:"funOption_vip",pId:"funOption",name:"会员数量",checked:false,color:"#FFFFFF",
@@ -117,7 +121,6 @@ export default {
     //监听div得选中状态。及时改变ztree状态
     ztreeJson:{
       handler() {
-        console.log("1");
         var index = 0 ;
         for ( index in this.ztreeJson){
           var ztreeName = this.ztreeJson[index].name.toString();

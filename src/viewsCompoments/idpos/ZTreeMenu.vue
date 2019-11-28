@@ -46,11 +46,8 @@ export default {
     methods:{
         //ztree选中事件
         ztreeCheck:function(event, treeId, treeNode){
-            //调用父级方法
-            // this.$emit('ztreeClickFun',treeNode);
             var index = 0 ;
             var ztreeId = treeNode.id.toString();
-            // var parentZtreeIdList = ["goodsOption","storeOption","funOption"];
             if(!treeNode.pId){
                 //父级菜单选中事件
                 for ( index in this.zTreeData){
@@ -70,7 +67,10 @@ export default {
                         //店铺、商品三级联动
                         if( (treeNode.pId.toString() == "storeOption" || treeNode.pId.toString() == "goodsOption") 
                             && treeNode.id.toString().indexOf("_")>-1){
-                                this.dealSelectMore(treeNode.pId.toString(),ztreeId,treeNode.checked)
+                                this.dealSelectMore(treeNode.pId.toString(),ztreeId,treeNode.checked);
+                                var changeIndex = {"storeOption_one":4,"goodsOption_one":8}
+                                this.zTreeData[changeIndex[treeNode.pId.toString()+"_one"]].value.module = [];
+                                this.zTreeData[changeIndex[treeNode.pId.toString()+"_one"]].selectFlag=false;
                         }
                         this.zTreeData[index].checked=treeNode.checked;
                         if(!treeNode.checked) this.resetDataValue(this.zTreeData[index]);
@@ -78,7 +78,6 @@ export default {
                 }
             }
             //取消事件
-
         },
         //ztree因数据改变而状态改变事件
         ztreeCheckStatusChange:function(name,status){

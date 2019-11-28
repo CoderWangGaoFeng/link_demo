@@ -7,7 +7,7 @@
                   </el-col>
                   <el-col :span="20" class="mainHeader-contentPosition">
                         <el-checkbox v-model="item.value.show" style="padding-left:5px;"></el-checkbox>
-                        <el-select v-model="item.value.select" :disabled=item.selectFlag @change="getNextSelectOption(index)" filterable placeholder="请选择" size="small" style="width:300px;margin-left:40px;">
+                        <el-select v-model="item.value.select" :disabled="checkSelectStatus(index)" @change="getNextSelectOption(index)" filterable placeholder="请选择" size="small" style="width:300px;margin-left:40px;">
                               <el-option
                                     v-for="item in options"
                                     :key="item.value"
@@ -76,6 +76,17 @@ export default {
                   }else{
                         vm.buttonText = "复数选择";
                         return "none";
+                  }
+            },
+            //用于返回下拉框是否禁止使用
+            checkSelectStatus(){
+                  return function(index){
+                        if(index == 0 ) return false;
+                        if( this.optionParam[index-1].value.select == "" ){
+                              return true;
+                        }else{
+                              return false;
+                        }
                   }
             }
       },
