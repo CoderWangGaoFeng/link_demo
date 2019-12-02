@@ -7,7 +7,7 @@
                 </el-col>
                 <el-col :span="20" class="mainHeader-contentPosition">
                     <el-checkbox v-model="optionShowOrHide" style="padding-left:5px;"></el-checkbox>
-                    <el-button size="small" style="width:300px;margin-left:40px;">默认按钮</el-button>
+                    <el-button size="small" style="width:300px;margin-left:40px;" @click="moduleShow">默认按钮</el-button>
                 </el-col>
         </el-row>
     </div>
@@ -38,8 +38,16 @@ export default {
                 }
             }
         }
+    },
+    methods:{
+        moduleShow(){
+            global.prod_instance.show();
+        }
+    },
+    //页面渲染后开始执行
+    mounted(){
+        global.prod_instance.init({usercd: "10151939",level: "l-m-s-t",elementId: "btn_multi_prod",kigyoucd: "0001"});
     }
-    
 }
 </script>
 

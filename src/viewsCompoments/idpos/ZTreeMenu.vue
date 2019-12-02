@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import '@ztree/ztree_v3/css/zTreeStyle/zTreeStyle.css'
 import '@ztree/ztree_v3/js/jquery.ztree.core.js'
 import '@ztree/ztree_v3/js/jquery.ztree.excheck.js'
@@ -144,6 +143,7 @@ export default {
     mounted(){
         //初始化ztree并全部展开
         $.fn.zTree.init($("#treeDemo"), this.setting, this.zTreeData).expandAll(true);
+        
       }
 }
 </script>

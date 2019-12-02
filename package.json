@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ztree/ztree_v3": "^3.5.41",
+    "bootstrap": "^3.4.1",
     "core-js": "^2.6.5",
     "element-ui": "^2.12.0",
     "jquery": "^3.4.1",
